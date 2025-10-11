@@ -5,3 +5,5 @@ export const article = sqliteTable('article', {
 	title: text('title').notNull(),
 	author: text('author')
 });
+
+export type Article = typeof article.$inferSelect;

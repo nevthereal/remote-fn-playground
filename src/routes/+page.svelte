@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Article from '$lib/Article.svelte';
 	import { getArticles, newArticle } from './articles.remote';
 </script>
 
@@ -10,7 +11,8 @@
 		submit().updates(getArticles());
 	})}
 >
-	<input class="rounded-lg p-2 ring" type="text" name="title" />
+	<input class="rounded-lg p-2 ring" type="text" placeholder="Title" name="title" />
+	<input class="rounded-lg p-2 ring" type="text" placeholder="Author" name="author" />
 	<button class="ml-2 rounded-lg bg-amber-500 p-2">Add Article</button>
 </form>
 
@@ -19,9 +21,9 @@
 	{#snippet pending()}
 		<p class="font-mono italic">Loading posts...</p>
 	{/snippet}
-	<ul>
-		{#each await getArticles() as article}
-			<li>{article.title}</li>
+	<ul class="space-y-2">
+		{#each await getArticles() as article (article.id)}
+			<Article {article} />
 		{:else}
 			<li>No posts...</li>
 		{/each}
